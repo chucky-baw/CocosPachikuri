@@ -65,14 +65,14 @@ bool HelloWorld::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     //背景描画
-    auto bg = Sprite::create("/Users/sasakiyusei/Documents/cocos/Pachikuri/Resources/Floor.jpg");
+    auto bg = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/Floor.jpg");
     bg->setAnchorPoint(Vec2(0.5, 0.5));
     bg->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     bg->setScale(2.0, 2.0);
     this->addChild(bg, 1);
     
     //ルンバ描画
-    auto roomba = Sprite::create("/Users/sasakiyusei/Documents/cocos/Pachikuri/Resources/Roomba.png");
+    auto roomba = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/Roomba.png");
     roomba->setAnchorPoint(Vec2(0.5, 0.5));
     roomba->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     roomba->setScale(0.2, 0.2);
@@ -98,22 +98,22 @@ bool HelloWorld::init()
     roomba->setPhysicsBody(roombaBody);
     
     //壁描画部分
-    auto verticalSpriteWall = Sprite::create("/Users/sasakiyusei/Documents/cocos/Pachikuri/Resources/VerticalWall.png");
-    auto horizontalSpriteWall = Sprite::create("/Users/sasakiyusei/Documents/cocos/Pachikuri/Resources/HorizontalWall.png");
+    auto verticalSpriteWall = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/VerticalWall.png");
+    auto horizontalSpriteWall = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/HorizontalWall.png");
     
-    auto leftyVerticalWall = addNewWall(this, Vec2(origin.x - verticalSpriteWall->getContentSize().width / 2, origin.y + visibleSize.height / 2), 1.0f, 2.5f, false, "/Users/sasakiyusei/Documents/cocos/Pachikuri/Resources/VerticalWall.png");
+    auto leftyVerticalWall = addNewWall(this, Vec2(origin.x - verticalSpriteWall->getContentSize().width / 2, origin.y + visibleSize.height / 2), 1.0f, 2.5f, false, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/VerticalWall.png");
     
     
-    auto rightVerticalWall = addNewWall(this, Vec2(origin.x + visibleSize.width +  verticalSpriteWall->getContentSize().width / 2, origin.y + visibleSize.height / 2), 1.0f, 2.5f, false, "/Users/sasakiyusei/Documents/cocos/Pachikuri/Resources/VerticalWall.png");
+    auto rightVerticalWall = addNewWall(this, Vec2(origin.x + visibleSize.width +  verticalSpriteWall->getContentSize().width / 2, origin.y + visibleSize.height / 2), 1.0f, 2.5f, false, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/VerticalWall.png");
     
-    auto topWall = addNewWall(this, Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height + horizontalSpriteWall->getContentSize().height / 2), 2.0f, 1.0f, false, "/Users/sasakiyusei/Documents/cocos/Pachikuri/Resources/HorizontalWall.png");
+    auto topWall = addNewWall(this, Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height + horizontalSpriteWall->getContentSize().height / 2), 2.0f, 1.0f, false, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/HorizontalWall.png");
     
-    auto bottomWall = addNewWall(this, Vec2(origin.x + visibleSize.width / 2, origin.y - horizontalSpriteWall->getContentSize().height / 2), 2.0f, 1.0f, false, "/Users/sasakiyusei/Documents/cocos/Pachikuri/Resources/HorizontalWall.png");
+    auto bottomWall = addNewWall(this, Vec2(origin.x + visibleSize.width / 2, origin.y - horizontalSpriteWall->getContentSize().height / 2), 2.0f, 1.0f, false, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/HorizontalWall.png");
     
     for (int i=0; i<7; i++)
     {
     //ゴミ描画
-    auto gomi = addNewTrash(this, Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 + 25*i), true, "/Users/sasakiyusei/Documents/cocos/Pachikuri/Resources/gomi_kamikuzu.png");
+    auto gomi = addNewTrash(this, Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 + 25*i), true, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/gomi_kamikuzu.png");
     }
     
     //タッチイベント部分

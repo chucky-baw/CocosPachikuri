@@ -55,6 +55,7 @@
 		D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B0611A1803AB670077942B /* CoreMotion.framework */; };
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
 		ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
+		FE03E2A623C3F40200F8DA04 /* ClearScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE03E2A423C3F40200F8DA04 /* ClearScene.cpp */; };
 		FEB704E923C1C29B00180E5F /* Floor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FEB704E723C1C29B00180E5F /* Floor.jpg */; };
 /* End PBXBuildFile section */
 
@@ -143,6 +144,8 @@
 		D6B0611A1803AB670077942B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		ED545A7B1B68A1F400C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		ED545A7D1B68A1FA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		FE03E2A423C3F40200F8DA04 /* ClearScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClearScene.cpp; sourceTree = "<group>"; };
+		FE03E2A523C3F40200F8DA04 /* ClearScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClearScene.hpp; sourceTree = "<group>"; };
 		FEB704E723C1C29B00180E5F /* Floor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Floor.jpg; path = ../Resources/Floor.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -288,6 +291,8 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
+				FE03E2A423C3F40200F8DA04 /* ClearScene.cpp */,
+				FE03E2A523C3F40200F8DA04 /* ClearScene.hpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -449,6 +454,7 @@
 			files = (
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
+				FE03E2A623C3F40200F8DA04 /* ClearScene.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
