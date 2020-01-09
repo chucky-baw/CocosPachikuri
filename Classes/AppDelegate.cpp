@@ -123,7 +123,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto clearScene = ClearScene::createScene();
 
     // run
-    director->runWithScene(clearScene);
+    director->runWithScene(scene);
 
     return true;
 }

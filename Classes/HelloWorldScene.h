@@ -29,6 +29,7 @@
 USING_NS_CC;
 class HelloWorld : public cocos2d::Scene
 {
+    
 public:
     static cocos2d::Scene* createScene();
 
@@ -40,7 +41,7 @@ public:
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
-    
+    void clearMove();
     bool OnTouchBegan(cocos2d:: Touch* touch, cocos2d::Event* event);
     void OnTouchEnded(cocos2d:: Touch* touch, cocos2d::Event* event);
     bool _OnContactPreSolve(PhysicsContact& contact, PhysicsContactPreSolve& solve);

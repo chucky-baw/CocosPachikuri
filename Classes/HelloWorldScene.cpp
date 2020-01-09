@@ -24,6 +24,7 @@
 
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "ClearScene.hpp"
 
 USING_NS_CC;
 
@@ -136,7 +137,6 @@ bool HelloWorld::init()
 //    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(collisionListener, this);
     collisionListener->onContactPreSolve = CC_CALLBACK_2(HelloWorld::_OnContactPreSolve, this);
     this->getEventDispatcher()->addEventListenerWithFixedPriority(collisionListener, 10);
-    
     
     
     /////////////////////////////
@@ -291,9 +291,20 @@ bool HelloWorld::_OnContactPreSolve(PhysicsContact &contact, PhysicsContactPreSo
     nodeA->removeFromParent();
     trashCount--;
     log("trashCount = %i", trashCount);
+    
+    if (trashCount == 0)
+    {
+        clearMove();
+    }
     //ここをfalseにすることですり抜けを実現
     return false;
 }
 
+void HelloWorld::clearMove()
+{
+    auto scene = ClearScene::createScene();
+    Director::getInstance()->replaceScene(TransitionFade::create(1.5f, scene, Color3B::WHITE));
+    
+}
                                    
                                    
