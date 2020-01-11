@@ -35,8 +35,10 @@ public:
     static cocos2d::Scene* createScene();
 
     virtual bool init();
+    HelloWorld();
+    ~HelloWorld();
     
-    void reduceVel(float dt);
+    void Update(float dt);
     
     int trashCount = 0;
     
@@ -54,6 +56,12 @@ public:
     Vec2 Direction;
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+    
+    //外部から呼び出すことができ，内部の変数を書き換えることができる関数を作成
+    //残り時間の変数とラベル
+    CC_SYNTHESIZE(float, _second, Second);
+    CC_SYNTHESIZE_RETAIN(cocos2d::Label *, _secondLabel, SecondLabel);
+    
 };
 
 #endif // __HELLOWORLD_SCENE_H__

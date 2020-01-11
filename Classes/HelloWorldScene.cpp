@@ -29,6 +29,9 @@
 
 USING_NS_CC;
 
+const float TIME_LIMIT_SECOND = 40;
+
+
 Scene* HelloWorld::createScene()
 {
     //物理演算があるシーンを生成
@@ -47,6 +50,18 @@ static void problemLoading(const char* filename)
 {
     printf("Error while loading: %s\n", filename);
     printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
+}
+
+HelloWorld::HelloWorld()
+:_second(TIME_LIMIT_SECOND)
+, _secondLabel(NULL)
+{
+    
+}
+
+HelloWorld::~HelloWorld()
+{
+    CC_SAFE_RELEASE_NULL(_secondLabel);
 }
 
 // on "init" you need to initialize your instance
@@ -73,6 +88,16 @@ bool HelloWorld::init()
     bg->setScale(2.0, 2.0);
     this->addChild(bg, 1);
     
+    
+    //残り時間描画
+    
+    int second = static_cast<int>(_second);
+    auto secondLabel = Label::createWithSystemFont(StringUtils::toString(second), "MarkerFelt", 16);
+    this->setSecondLabel(secondLabel);
+    secondLabel->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 300));
+    this->addChild(secondLabel, 5);
+    
+    
     //ルンバ描画
     auto roomba = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/Roomba.png");
     roomba->setAnchorPoint(Vec2(0.5, 0.5));
@@ -96,7 +121,7 @@ bool HelloWorld::init()
     roombaBody->setContactTestBitmask(2);
     roombaBody->setCollisionBitmask(2);
     //減速させる関数を毎フレーム呼ぶ
-    this->schedule(schedule_selector(HelloWorld::reduceVel));
+    this->schedule(schedule_selector(HelloWorld::Update));
     roomba->setPhysicsBody(roombaBody);
     
     //壁描画部分
@@ -262,12 +287,17 @@ void HelloWorld::OnTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event)
     return;
 }
 
-void HelloWorld::reduceVel(float dt)
+void HelloWorld::Update(float dt)
 {
     Sprite* character = (Sprite*)this->getChildByTag(1);
     auto nowVel = character->getPhysicsBody()->getVelocity();
     float force = 0.92f;
     character->getPhysicsBody()->setVelocity(Vec2(nowVel.x * force, nowVel.y * force));
+    
+    //制限時間減らしていく
+    _second -= dt;
+    int second = static_cast<int>(_second);
+    _secondLabel->setString(StringUtils::toString(second));
 }
 
 Sprite* HelloWorld::addNewWall(Node *parent, Vec2 p, float widthScale, float heightScale, bool dynamic, const char *fileName)
