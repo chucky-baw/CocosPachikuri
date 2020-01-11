@@ -25,6 +25,7 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "ClearScene.hpp"
+#include <vector>
 
 USING_NS_CC;
 
@@ -75,7 +76,7 @@ bool HelloWorld::init()
     //ルンバ描画
     auto roomba = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/Roomba.png");
     roomba->setAnchorPoint(Vec2(0.5, 0.5));
-    roomba->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
+    roomba->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 25));
     roomba->setScale(0.2, 0.2);
     roomba->setTag(1);
     this->addChild(roomba, 1);
@@ -111,10 +112,28 @@ bool HelloWorld::init()
     
     auto bottomWall = addNewWall(this, Vec2(origin.x + visibleSize.width / 2, origin.y - horizontalSpriteWall->getContentSize().height / 2), 2.0f, 1.0f, false, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/HorizontalWall.png");
     
+    
+    //ゴミの座標配列
+    Vec2 TrashVec[7]{
+        Vec2(origin.x + 23, origin.y + 100),
+        
+        Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2),
+        
+        Vec2(origin.x + 145, origin.y + 56),
+        
+        Vec2(origin.x + 43, origin.y + 165),
+        
+        Vec2(origin.x + 143, origin.y + 174),
+        
+        Vec2(origin.x + 138, origin.y + 264),
+        
+         Vec2(origin.x + 77, origin.y + 260)
+    };
+    
     for (int i=0; i<7; i++)
     {
     //ゴミ描画
-    auto gomi = addNewTrash(this, Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 + 25*i), true, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/gomi_kamikuzu.png");
+    auto gomi = addNewTrash(this, TrashVec[i], true, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/gomi_kamikuzu.png");
     }
     
     //タッチイベント部分
@@ -223,7 +242,7 @@ bool HelloWorld::OnTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)
 {
     auto sPos = touch->getLocation();
     startPos = sPos;
-    //log("startPos = %f, %f", startPos.x, startPos.y);
+    log("startPos = %f, %f", startPos.x, startPos.y);
     return true;
 }
 

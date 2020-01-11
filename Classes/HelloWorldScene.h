@@ -26,6 +26,7 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include <vector>
 USING_NS_CC;
 class HelloWorld : public cocos2d::Scene
 {
