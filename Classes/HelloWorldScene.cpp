@@ -339,7 +339,7 @@ bool HelloWorld::_OnContactPreSolve(PhysicsContact &contact, PhysicsContactPreSo
     auto nodeB = contact.getShapeB()->getBody()->getNode();
     nodeA->removeFromParent();
     trashCount--;
-    log("trashCount = %i", trashCount);
+    //log("trashCount = %i", trashCount);
     
     if (trashCount == 0)
     {
