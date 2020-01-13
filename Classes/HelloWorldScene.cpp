@@ -332,25 +332,65 @@ Sprite* HelloWorld::addNewTrash(Node *parent, Vec2 v, bool dynamic, const char *
 //ねことルンバの衝突
 bool HelloWorld::catCollision(PhysicsContact& contact)
 {
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    
+    //　ネコとルンバの衝突
     if((contact.getShapeA()->getBody()->getTag() == 4 && contact.getShapeB()->getBody()->getTag() == 1))
     {
-            auto sprite = (Sprite*)this->getChildByTag(3);
+
+
+        //ルンバのスプライトを取得
+        auto roombasp = (Sprite*)this->getChildByTag(1);
+        //猫のスプライトを取得
+            auto catsp = (Sprite*)this->getChildByTag(3);
         
-            auto movetoright = MoveTo::create(0.5, Vec2(sprite->getPosition().x + 10, sprite->getPosition().y));
-            //sprite->runAction(movetoright);
+        roombasp->setVisible(false);
+        catsp->setVisible(false);
         
-            auto movetoleft = MoveTo::create(0.5, Vec2(sprite->getPosition().x - 10, sprite->getPosition().y));
-            //sprite->runAction(movetoleft);
+        //ルンバ猫のスプライトを作成
+        Sprite* catOnRoomba = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/cat_on_roomba.png");
+        catOnRoomba->setAnchorPoint(Vec2(0.5, 0.5));
+        catOnRoomba->setPosition(Vec2(catsp->getPosition().x, catsp->getPosition().y));
+        catOnRoomba->setScale(0.3, 0.3);
+        //ルンバ猫表示
+        this->addChild(catOnRoomba, 3);
+
+        auto callback = CallFuncN::create([this, catOnRoomba, catsp, roombasp](Ref* sender)
+                                          {
+                                              catOnRoomba->removeFromParent();
+                                              
+                                              //ルンバと猫復活
+                                              catsp->setVisible(true);
+                                              roombasp->setVisible(true);
+                                          });
         
+        //右に移動
+            auto movetoright = MoveTo::create(0.5, Vec2(catOnRoomba->getPosition().x + 10, catOnRoomba->getPosition().y));
+
+        //左に移動
+            auto movetoleft = MoveTo::create(0.5, Vec2(catOnRoomba->getPosition().x - 10, catOnRoomba->getPosition().y));
+
+        //左右の繰り返しアクションを作成
             auto seq = Sequence::create(movetoright, movetoleft, NULL);
-        
+
+        //繰り返しアクションを再生
             auto repeat = Repeat::create(seq, 3);
         
-            sprite->runAction(repeat);
+        auto repeat2 = Sequence::create(repeat, callback, NULL);
+
+            catOnRoomba->runAction(repeat2);
+        
+        //ルンバ猫を削除
+        //catOnRoomba->removeFromParent();
+        
+//        //ルンバと猫復活
+//        catsp->setVisible(true);
+//        roombasp->setVisible(true);
         
         
         return true;
-    }else if((contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1)){
+    }else if((contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1)){//ごみとルンバの衝突
         auto nodeA = contact.getShapeA()->getBody()->getNode();
         nodeA->removeFromParent();
         trashCount--;
