@@ -56,7 +56,6 @@ HelloWorld::HelloWorld()
 :_second(TIME_LIMIT_SECOND)
 , _secondLabel(NULL)
 {
-    
 }
 
 HelloWorld::~HelloWorld()
