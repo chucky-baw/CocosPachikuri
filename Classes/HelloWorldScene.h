@@ -53,6 +53,7 @@ public:
     bool OnTouchBegan(cocos2d:: Touch* touch, cocos2d::Event* event);
     void OnTouchEnded(cocos2d:: Touch* touch, cocos2d::Event* event);
     bool _OnContactPreSolve(PhysicsContact& contact, PhysicsContactPreSolve& solve);
+    bool catCollision(PhysicsContact& contact, PhysicsContactPreSolve& solve);
     Sprite* addNewWall(Node *parent, Vec2 p, float widthScale, float heightScale, bool dynamic, const char *fileName);
     Sprite* addNewTrash(Node *parent, Vec2 v, bool dynamic, const char *fileName);
     

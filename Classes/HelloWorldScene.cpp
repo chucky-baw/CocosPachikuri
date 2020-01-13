@@ -30,7 +30,7 @@
 
 USING_NS_CC;
 
-const float TIME_LIMIT_SECOND = 10;
+const float TIME_LIMIT_SECOND = 100;
 
 
 Scene* HelloWorld::createScene()
@@ -117,14 +117,35 @@ bool HelloWorld::init()
     roombaBody->setMass(1.0f);
     roombaBody->setDynamic(true);
     roombaBody->setRotationEnable(false);
-    roombaBody->setCategoryBitmask(1);
-    roombaBody->setContactTestBitmask(2);
-    roombaBody->setCollisionBitmask(2);
+    roombaBody->setCategoryBitmask(3);
+    roombaBody->setContactTestBitmask(3);
+    roombaBody->setCollisionBitmask(3);
+    roombaBody->setTag(1);
     //減速させる関数を毎フレーム呼ぶ
    this->schedule(schedule_selector(HelloWorld::VelUpdate));
     
     roomba->setPhysicsBody(roombaBody);
     
+    //猫描画
+    auto cat = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/cat.png");
+    cat->setAnchorPoint(Vec2(0.5, 0.5));
+    cat->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 - 40));
+    cat->setScale(0.3, 0.3);
+    cat->setTag(3);
+    this->addChild(cat, 1);
+    
+    Size catSize = Size(cat->getContentSize().width, cat->getContentSize().height);
+    
+    //猫の物理特性
+    auto catBody = PhysicsBody::createCircle(catSize.width / 2);
+    catBody->setMass(1.0f);
+    catBody->setDynamic(false);
+    catBody->setRotationEnable(false);
+    catBody->setTag(4);
+    catBody->setCategoryBitmask(1);
+    catBody->setContactTestBitmask(1);
+    catBody->setCollisionBitmask(1);
+    cat->setPhysicsBody(catBody);
     
     //壁描画部分
     auto verticalSpriteWall = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/VerticalWall.png");
@@ -162,7 +183,6 @@ bool HelloWorld::init()
     //ゴミ描画
     auto gomi = addNewTrash(this, TrashVec[i], true, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/gomi_kamikuzu.png");
     }
-        if(_second <= 0) gameOverMove();
     //タッチイベント部分
     auto listener = EventListenerTouchOneByOne::create();
     
@@ -173,97 +193,22 @@ bool HelloWorld::init()
     
     //ゴミとルンバの衝突、消滅部分
     auto collisionListener = EventListenerPhysicsContact::create();
-//    collisionListener->onContactPreSolve = [this](PhysicsContact &contact)->bool
-//    {
-//        auto nodeA = contact.getShapeA()->getBody()->getNode();
-//        auto nodeB = contact.getShapeB()->getBody()->getNode();
-//        nodeA->removeFromParent();
-//        return true;
-//    };
-//    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(collisionListener, this);
+
     collisionListener->onContactPreSolve = CC_CALLBACK_2(HelloWorld::_OnContactPreSolve, this);
     this->getEventDispatcher()->addEventListenerWithFixedPriority(collisionListener, 10);
     
+    //ルンバと猫の衝突
+    auto catCollisionListener = EventListenerPhysicsContact::create();
     
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-//    auto closeItem = MenuItemImage::create(
-//                                           "CloseNormal.png",
-//                                           "CloseSelected.png",
-//                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-//
-//    if (closeItem == nullptr ||
-//        closeItem->getContentSize().width <= 0 ||
-//        closeItem->getContentSize().height <= 0)
-//    {
-//        problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
-//    }
-//    else
-//    {
-//        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-//        float y = origin.y + closeItem->getContentSize().height/2;
-//        closeItem->setPosition(Vec2(x,y));
-//    }
-//
-//    // create menu, it's an autorelease object
-//    auto menu = Menu::create(closeItem, NULL);
-//    menu->setPosition(Vec2::ZERO);
-//    this->addChild(menu, 1);
-//
-//    /////////////////////////////
-//    // 3. add your codes below...
-//
-//    // add a label shows "Hello World"
-//    // create and initialize a label
-//
-//    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-//    if (label == nullptr)
-//    {
-//        problemLoading("'fonts/Marker Felt.ttf'");
-//    }
-//    else
-//    {
-//        // position the label on the center of the screen
-//        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-//                                origin.y + visibleSize.height - label->getContentSize().height));
-//
-//        // add the label as a child to this layer
-//        this->addChild(label, 1);
-//    }
-//
-//    // add "HelloWorld" splash screen"
-//    auto sprite = Sprite::create("HelloWorld.png");
-//    if (sprite == nullptr)
-//    {
-//        problemLoading("'HelloWorld.png'");
-//    }
-//    else
-//    {
-//        // position the sprite on the center of the screen
-//        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-//
-//        // add the sprite as a child to this layer
-//        this->addChild(sprite, 0);
-//    }
+    catCollisionListener->onContactPreSolve = CC_CALLBACK_2(HelloWorld::catCollision, this);
+    
+    this->getEventDispatcher()->addEventListenerWithFixedPriority(catCollisionListener, 11);
+    
+    
+    
     return true;
 }
 
-
-void HelloWorld::menuCloseCallback(Ref* pSender)
-{
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
-
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
-
-
-}
 
 bool HelloWorld::OnTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event)
 {
@@ -312,13 +257,6 @@ void HelloWorld::VelUpdate(float dt)
     }
 }
 
-void HelloWorld::TimeUpdate(float dt)
-{
-    //制限時間減らしていく
-    _second -= dt;
-    int second = static_cast<int>(_second);
-    if(second == 0) gameOverMove(); _secondLabel->setString(StringUtils::toString(second));
-}
 
 Sprite* HelloWorld::addNewWall(Node *parent, Vec2 p, float widthScale, float heightScale, bool dynamic, const char *fileName)
     {
@@ -342,9 +280,10 @@ Sprite* HelloWorld::addNewTrash(Node *parent, Vec2 v, bool dynamic, const char *
     material.restitution = 0.0f;
     sprite->setPhysicsBody(PhysicsBody::createCircle(sprite->getContentSize().width / 2, material));
     sprite->getPhysicsBody()->setDynamic(dynamic);
-    sprite->getPhysicsBody()->setCategoryBitmask(2);
+    sprite->getPhysicsBody()->setCategoryBitmask(1);
     sprite->getPhysicsBody()->setContactTestBitmask(1);
     sprite->getPhysicsBody()->setCollisionBitmask(1);
+    sprite->getPhysicsBody()->setTag(5);
     sprite->setPosition(v);
     sprite->setScale(0.25f);
     parent->addChild(sprite, 10);
@@ -357,8 +296,10 @@ bool HelloWorld::_OnContactPreSolve(PhysicsContact &contact, PhysicsContactPreSo
 {
     auto nodeA = contact.getShapeA()->getBody()->getNode();
     auto nodeB = contact.getShapeB()->getBody()->getNode();
+    if((contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1)){
     nodeA->removeFromParent();
     trashCount--;
+    }
     //log("trashCount = %i", trashCount);
     
     if (trashCount == 0)
@@ -366,6 +307,21 @@ bool HelloWorld::_OnContactPreSolve(PhysicsContact &contact, PhysicsContactPreSo
         clearMove();
     }
     //ここをfalseにすることですり抜けを実現
+    return false;
+}
+
+//ねことルンバの衝突
+bool HelloWorld::catCollision(PhysicsContact& contact, PhysicsContactPreSolve &solve)
+{
+    auto nodeA = contact.getShapeA()->getBody()->getNode();
+    if((contact.getShapeA()->getBody()->getTag() == 4 && contact.getShapeB()->getBody()->getTag() == 1))
+    {
+    auto sprite = (Sprite*)this->getChildByTag(3);
+        auto moveto = MoveTo::create(1, Vec2(sprite->getPosition().x + 3, sprite->getPosition().y));
+    log("痛え");
+    sprite->runAction(moveto);
+        return true;
+    }
     return false;
 }
 
