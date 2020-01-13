@@ -25,11 +25,12 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "ClearScene.hpp"
+#include "GameOverScene.hpp"
 #include <vector>
 
 USING_NS_CC;
 
-const float TIME_LIMIT_SECOND = 40;
+const float TIME_LIMIT_SECOND = 10;
 
 
 Scene* HelloWorld::createScene()
@@ -120,8 +121,10 @@ bool HelloWorld::init()
     roombaBody->setContactTestBitmask(2);
     roombaBody->setCollisionBitmask(2);
     //減速させる関数を毎フレーム呼ぶ
-    this->schedule(schedule_selector(HelloWorld::Update));
+   this->schedule(schedule_selector(HelloWorld::VelUpdate));
+    
     roomba->setPhysicsBody(roombaBody);
+    
     
     //壁描画部分
     auto verticalSpriteWall = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/VerticalWall.png");
@@ -159,7 +162,7 @@ bool HelloWorld::init()
     //ゴミ描画
     auto gomi = addNewTrash(this, TrashVec[i], true, "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/gomi_kamikuzu.png");
     }
-    
+        if(_second <= 0) gameOverMove();
     //タッチイベント部分
     auto listener = EventListenerTouchOneByOne::create();
     
@@ -286,17 +289,35 @@ void HelloWorld::OnTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event)
     return;
 }
 
-void HelloWorld::Update(float dt)
+void HelloWorld::VelUpdate(float dt)
 {
+    if(_second > 0){
     Sprite* character = (Sprite*)this->getChildByTag(1);
     auto nowVel = character->getPhysicsBody()->getVelocity();
     float force = 0.92f;
+        
     character->getPhysicsBody()->setVelocity(Vec2(nowVel.x * force, nowVel.y * force));
-    
+    }
     //制限時間減らしていく
     _second -= dt;
     int second = static_cast<int>(_second);
-    _secondLabel->setString(StringUtils::toString(second));
+ _secondLabel->setString(StringUtils::toString(second));
+    if(second == 0 && this->transitionFade == true)
+    {
+        if(this->transitionFade)
+        {
+            transitionFade = false;
+            gameOverMove();
+        }
+    }
+}
+
+void HelloWorld::TimeUpdate(float dt)
+{
+    //制限時間減らしていく
+    _second -= dt;
+    int second = static_cast<int>(_second);
+    if(second == 0) gameOverMove(); _secondLabel->setString(StringUtils::toString(second));
 }
 
 Sprite* HelloWorld::addNewWall(Node *parent, Vec2 p, float widthScale, float heightScale, bool dynamic, const char *fileName)
@@ -352,7 +373,15 @@ void HelloWorld::clearMove()
 {
     auto scene = ClearScene::createScene();
     Director::getInstance()->replaceScene(TransitionFade::create(1.5f, scene, Color3B::WHITE));
-    
+    return;
 }
-                                   
+
+void HelloWorld::gameOverMove()
+{
+    auto scene = GameOverScene::createScene();
+    
+    Director::getInstance()->replaceScene(TransitionFade::create(1.5f, scene, Color3B::BLACK));
+    
+    return;
+}
                                    

@@ -56,6 +56,7 @@
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
 		ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
 		FE03E2A623C3F40200F8DA04 /* ClearScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE03E2A423C3F40200F8DA04 /* ClearScene.cpp */; };
+		FE7669F023CC1D3C0018641C /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE7669EE23CC1D3C0018641C /* GameOverScene.cpp */; };
 		FEB704E923C1C29B00180E5F /* Floor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FEB704E723C1C29B00180E5F /* Floor.jpg */; };
 /* End PBXBuildFile section */
 
@@ -146,6 +147,8 @@
 		ED545A7D1B68A1FA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		FE03E2A423C3F40200F8DA04 /* ClearScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClearScene.cpp; sourceTree = "<group>"; };
 		FE03E2A523C3F40200F8DA04 /* ClearScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClearScene.hpp; sourceTree = "<group>"; };
+		FE7669EE23CC1D3C0018641C /* GameOverScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverScene.cpp; sourceTree = "<group>"; };
+		FE7669EF23CC1D3C0018641C /* GameOverScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameOverScene.hpp; sourceTree = "<group>"; };
 		FEB704E723C1C29B00180E5F /* Floor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Floor.jpg; path = ../Resources/Floor.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -293,6 +296,8 @@
 				46880B8719C43A87006E1F66 /* HelloWorldScene.h */,
 				FE03E2A423C3F40200F8DA04 /* ClearScene.cpp */,
 				FE03E2A523C3F40200F8DA04 /* ClearScene.hpp */,
+				FE7669EE23CC1D3C0018641C /* GameOverScene.cpp */,
+				FE7669EF23CC1D3C0018641C /* GameOverScene.hpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -452,6 +457,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE7669F023CC1D3C0018641C /* GameOverScene.cpp in Sources */,
 				1AF87B781F6F77F7007BE51C /* AppController.mm in Sources */,
 				1AF87B8B1F6F782A007BE51C /* RootViewController.mm in Sources */,
 				FE03E2A623C3F40200F8DA04 /* ClearScene.cpp in Sources */,

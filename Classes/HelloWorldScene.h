@@ -30,6 +30,8 @@
 USING_NS_CC;
 class HelloWorld : public cocos2d::Scene
 {
+private:
+    bool transitionFade = true;
     
 public:
     static cocos2d::Scene* createScene();
@@ -38,13 +40,16 @@ public:
     HelloWorld();
     ~HelloWorld();
     
-    void Update(float dt);
+    void VelUpdate(float dt);
+    void TimeUpdate(float dt);
+
     
     int trashCount = 0;
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     void clearMove();
+    void gameOverMove();
     bool OnTouchBegan(cocos2d:: Touch* touch, cocos2d::Event* event);
     void OnTouchEnded(cocos2d:: Touch* touch, cocos2d::Event* event);
     bool _OnContactPreSolve(PhysicsContact& contact, PhysicsContactPreSolve& solve);
