@@ -117,7 +117,7 @@ bool HelloWorld::init()
     roombaBody->setMass(1.0f);
     roombaBody->setDynamic(true);
     roombaBody->setRotationEnable(false);
-    roombaBody->setCategoryBitmask(3);
+    roombaBody->setCategoryBitmask(1);
     roombaBody->setContactTestBitmask(3);
     roombaBody->setCollisionBitmask(3);
     roombaBody->setTag(1);
@@ -142,7 +142,7 @@ bool HelloWorld::init()
     catBody->setDynamic(false);
     catBody->setRotationEnable(false);
     catBody->setTag(4);
-    catBody->setCategoryBitmask(1);
+    catBody->setCategoryBitmask(2);
     catBody->setContactTestBitmask(1);
     catBody->setCollisionBitmask(1);
     cat->setPhysicsBody(catBody);
@@ -191,16 +191,16 @@ bool HelloWorld::init()
     
     this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
     
-    //ゴミとルンバの衝突、消滅部分
-    auto collisionListener = EventListenerPhysicsContact::create();
-
-    collisionListener->onContactPreSolve = CC_CALLBACK_2(HelloWorld::_OnContactPreSolve, this);
-    this->getEventDispatcher()->addEventListenerWithFixedPriority(collisionListener, 10);
+//    //ゴミとルンバの衝突、消滅部分
+//    auto collisionListener = EventListenerPhysicsContact::create();
+//
+//    collisionListener->onContactPreSolve = CC_CALLBACK_2(HelloWorld::_OnContactPreSolve, this);
+//    this->getEventDispatcher()->addEventListenerWithFixedPriority(collisionListener, 10);
     
     //ルンバと猫の衝突
     auto catCollisionListener = EventListenerPhysicsContact::create();
     
-    catCollisionListener->onContactPreSolve = CC_CALLBACK_2(HelloWorld::catCollision, this);
+    catCollisionListener->onContactBegin = CC_CALLBACK_1(HelloWorld::catCollision, this);
     
     this->getEventDispatcher()->addEventListenerWithFixedPriority(catCollisionListener, 11);
     
@@ -280,7 +280,7 @@ Sprite* HelloWorld::addNewTrash(Node *parent, Vec2 v, bool dynamic, const char *
     material.restitution = 0.0f;
     sprite->setPhysicsBody(PhysicsBody::createCircle(sprite->getContentSize().width / 2, material));
     sprite->getPhysicsBody()->setDynamic(dynamic);
-    sprite->getPhysicsBody()->setCategoryBitmask(1);
+    sprite->getPhysicsBody()->setCategoryBitmask(3);
     sprite->getPhysicsBody()->setContactTestBitmask(1);
     sprite->getPhysicsBody()->setCollisionBitmask(1);
     sprite->getPhysicsBody()->setTag(5);
@@ -292,37 +292,79 @@ Sprite* HelloWorld::addNewTrash(Node *parent, Vec2 v, bool dynamic, const char *
     return sprite;
 }
 
-bool HelloWorld::_OnContactPreSolve(PhysicsContact &contact, PhysicsContactPreSolve &solve)
-{
-    auto nodeA = contact.getShapeA()->getBody()->getNode();
-    auto nodeB = contact.getShapeB()->getBody()->getNode();
-    if((contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1)){
-    nodeA->removeFromParent();
-    trashCount--;
-    }
-    //log("trashCount = %i", trashCount);
-    
-    if (trashCount == 0)
-    {
-        clearMove();
-    }
-    //ここをfalseにすることですり抜けを実現
-    return false;
-}
+//bool HelloWorld::_OnContactPreSolve(PhysicsContact &contact, PhysicsContactPreSolve &solve)
+//{
+//    auto nodeA = contact.getShapeA()->getBody()->getNode();
+//    auto nodeB = contact.getShapeB()->getBody()->getNode();
+//    if((contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1)){
+//    nodeA->removeFromParent();
+//    trashCount--;
+//
+//    //log("trashCount = %i", trashCount);
+//
+//    if (trashCount == 0)
+//    {
+//        clearMove();
+//    }
+//    //ここをfalseにすることですり抜けを実現
+//    return false;
+//    } else if((contact.getShapeA()->getBody()->getTag() == 4 && contact.getShapeB()->getBody()->getTag() == 1))
+//    {
+//        auto sprite = (Sprite*)this->getChildByTag(3);
+//
+//        auto movetoright = MoveTo::create(0.5, Vec2(sprite->getPosition().x + 10, sprite->getPosition().y));
+//        //sprite->runAction(movetoright);
+//
+//        auto movetoleft = MoveTo::create(0.5, Vec2(sprite->getPosition().x - 10, sprite->getPosition().y));
+//        //sprite->runAction(movetoleft);
+//
+//        auto seq = Sequence::create(movetoright, movetoleft, NULL);
+//
+//        auto repeat = Repeat::create(seq, 3);
+//
+//        sprite->runAction(repeat);
+//
+//
+//        return true;
+//    }
+//}
 
 //ねことルンバの衝突
-bool HelloWorld::catCollision(PhysicsContact& contact, PhysicsContactPreSolve &solve)
+bool HelloWorld::catCollision(PhysicsContact& contact)
 {
-    auto nodeA = contact.getShapeA()->getBody()->getNode();
     if((contact.getShapeA()->getBody()->getTag() == 4 && contact.getShapeB()->getBody()->getTag() == 1))
     {
-    auto sprite = (Sprite*)this->getChildByTag(3);
-        auto moveto = MoveTo::create(1, Vec2(sprite->getPosition().x + 3, sprite->getPosition().y));
-    log("痛え");
-    sprite->runAction(moveto);
+            auto sprite = (Sprite*)this->getChildByTag(3);
+        
+            auto movetoright = MoveTo::create(0.5, Vec2(sprite->getPosition().x + 10, sprite->getPosition().y));
+            //sprite->runAction(movetoright);
+        
+            auto movetoleft = MoveTo::create(0.5, Vec2(sprite->getPosition().x - 10, sprite->getPosition().y));
+            //sprite->runAction(movetoleft);
+        
+            auto seq = Sequence::create(movetoright, movetoleft, NULL);
+        
+            auto repeat = Repeat::create(seq, 3);
+        
+            sprite->runAction(repeat);
+        
+        
         return true;
+    }else if((contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1)){
+        auto nodeA = contact.getShapeA()->getBody()->getNode();
+        nodeA->removeFromParent();
+        trashCount--;
+        
+        //log("trashCount = %i", trashCount);
+        
+        if (trashCount == 0)
+        {
+            clearMove();
+        }
+        //ここをfalseにすることですり抜けを実現
+        return false;
     }
-    return false;
+    
 }
 
 void HelloWorld::clearMove()
