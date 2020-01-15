@@ -17,6 +17,7 @@ public:
     static cocos2d::Scene* createScene();
     virtual bool init();
     //シーン遷移のためのタップ
+    //bool OnTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     CREATE_FUNC(TitleScene);
 };
 

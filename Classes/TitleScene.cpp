@@ -6,6 +6,7 @@
 //
 
 #include "TitleScene.hpp"
+#include "HelloWorldScene.h"
 USING_NS_CC;
 
 cocos2d::Scene* TitleScene::createScene()
@@ -43,6 +44,30 @@ bool TitleScene::init()
     bg->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     bg->setScale(2.0f, 2.0f);
     this->addChild(bg);
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = [this](Touch* touch, Event* event)
+    {
+        //一度押したらアクションを無効化
+        this->getEventDispatcher()->removeAllEventListeners();
+        //0.5s待機してからcallFuncを呼ぶ
+        auto delay = DelayTime::create(0.5);
+        
+        auto startGame = CallFunc::create([]{
+            auto scene = HelloWorld::createScene();
+            //シーン移動
+            auto transition = TransitionProgressInOut::create(1.5, scene);
+            Director::getInstance()->replaceScene(transition);
+            
+        });
+        
+        this->runAction(Sequence::create(delay, startGame, NULL));
+        
+        
+        return true;
+    };
+    
+    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
     
     return true;
 
