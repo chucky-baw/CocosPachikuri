@@ -56,6 +56,7 @@
 		ED545A7C1B68A1F400C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7B1B68A1F400C3958E /* libiconv.dylib */; };
 		ED545A7E1B68A1FA00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A7D1B68A1FA00C3958E /* libiconv.dylib */; };
 		FE03E2A623C3F40200F8DA04 /* ClearScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE03E2A423C3F40200F8DA04 /* ClearScene.cpp */; };
+		FE30FC1E23CE964700276C0A /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE30FC1C23CE964700276C0A /* TitleScene.cpp */; };
 		FE7669F023CC1D3C0018641C /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE7669EE23CC1D3C0018641C /* GameOverScene.cpp */; };
 		FEB704E923C1C29B00180E5F /* Floor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FEB704E723C1C29B00180E5F /* Floor.jpg */; };
 /* End PBXBuildFile section */
@@ -147,6 +148,8 @@
 		ED545A7D1B68A1FA00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		FE03E2A423C3F40200F8DA04 /* ClearScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClearScene.cpp; sourceTree = "<group>"; };
 		FE03E2A523C3F40200F8DA04 /* ClearScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ClearScene.hpp; sourceTree = "<group>"; };
+		FE30FC1C23CE964700276C0A /* TitleScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScene.cpp; sourceTree = "<group>"; };
+		FE30FC1D23CE964700276C0A /* TitleScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TitleScene.hpp; sourceTree = "<group>"; };
 		FE7669EE23CC1D3C0018641C /* GameOverScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverScene.cpp; sourceTree = "<group>"; };
 		FE7669EF23CC1D3C0018641C /* GameOverScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameOverScene.hpp; sourceTree = "<group>"; };
 		FEB704E723C1C29B00180E5F /* Floor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Floor.jpg; path = ../Resources/Floor.jpg; sourceTree = "<group>"; };
@@ -298,6 +301,8 @@
 				FE03E2A523C3F40200F8DA04 /* ClearScene.hpp */,
 				FE7669EE23CC1D3C0018641C /* GameOverScene.cpp */,
 				FE7669EF23CC1D3C0018641C /* GameOverScene.hpp */,
+				FE30FC1C23CE964700276C0A /* TitleScene.cpp */,
+				FE30FC1D23CE964700276C0A /* TitleScene.hpp */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -464,6 +469,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				1AF87B8A1F6F7822007BE51C /* main.m in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				FE30FC1E23CE964700276C0A /* TitleScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
