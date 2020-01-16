@@ -30,7 +30,7 @@ bool GameOverScene::init()
     bg->setAnchorPoint(Vec2(0.5, 0.5));
     bg->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     bg->setScale(1.0f, 1.0f);
-    this->addChild(bg, 2);
+    this->addChild(bg);
     
     return true;
 }

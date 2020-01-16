@@ -125,7 +125,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto TitleScene = TitleScene::createScene();
 
     // run
-    director->runWithScene(TitleScene);
+    director->runWithScene(clearScene);
 
     return true;
 }
