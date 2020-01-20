@@ -32,5 +32,30 @@ bool GameOverScene::init()
     bg->setScale(1.0f, 1.0f);
     this->addChild(bg);
     
+    //各ボタンを作成
+    auto againButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/againButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", CC_CALLBACK_1(GameOverScene::pushAgain, this));
+    
+    auto backButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/backButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedBackbutton.png", CC_CALLBACK_1(GameOverScene::pushBack, this));
+    
+    againButton->setScale(0.6f);
+    againButton->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 + 10));
+    
+    backButton->setScale(0.6f);
+    backButton->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 - 35));
+    
+    auto menu = Menu::create(againButton, backButton, NULL);
+    menu->setPosition(Point::ZERO);
+    this->addChild(menu, 1);
+    
     return true;
+}
+
+void GameOverScene::pushAgain(Ref *pSender)
+{
+    CCLOG("push again button");
+}
+
+void GameOverScene::pushBack(Ref *pSender)
+{
+    CCLOG("push back button");
 }

@@ -26,6 +26,7 @@
 #include "HelloWorldScene.h"
 #include "ClearScene.hpp"
 #include "TitleScene.hpp"
+#include "GameOverScene.hpp"
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -123,9 +124,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto scene = HelloWorld::createScene();
     auto clearScene = ClearScene::createScene();
     auto TitleScene = TitleScene::createScene();
+    auto gameOverScene = GameOverScene::createScene();
 
     // run
-    director->runWithScene(clearScene);
+    director->runWithScene(gameOverScene);
 
     return true;
 }

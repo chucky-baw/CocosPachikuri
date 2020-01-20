@@ -17,6 +17,10 @@ public:
     static cocos2d::Scene* createScene();
     virtual bool init();
     
+    //ボタンを押した時の関数
+    void pushAgain(Ref *pSender);
+    void pushBack(Ref *pSender);
+    
     CREATE_FUNC(GameOverScene);
 };
 
