@@ -7,6 +7,9 @@
 
 #include "TitleScene.hpp"
 #include "HelloWorldScene.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
+
 USING_NS_CC;
 
 cocos2d::Scene* TitleScene::createScene()
@@ -23,6 +26,12 @@ bool TitleScene::init()
     {
         return false;
     }
+    
+    //SimpleAudioEngine::getInstance()->preloadBackgroundMusic("BGM.mp3");
+    
+    SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(1.0f);
+    
+    SimpleAudioEngine::getInstance()->playBackgroundMusic("BGM.mp3");
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto origin = Director::getInstance()->getVisibleOrigin();

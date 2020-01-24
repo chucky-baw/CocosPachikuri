@@ -58,6 +58,7 @@
 		FE30FC1E23CE964700276C0A /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE30FC1C23CE964700276C0A /* TitleScene.cpp */; };
 		FE7669F023CC1D3C0018641C /* GameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE7669EE23CC1D3C0018641C /* GameOverScene.cpp */; };
 		FEB704E923C1C29B00180E5F /* Floor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FEB704E723C1C29B00180E5F /* Floor.jpg */; };
+		FEF1CA5D23DA873F002DC068 /* BGM.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA5C23DA873F002DC068 /* BGM.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,7 @@
 		FE7669EE23CC1D3C0018641C /* GameOverScene.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverScene.cpp; sourceTree = "<group>"; };
 		FE7669EF23CC1D3C0018641C /* GameOverScene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GameOverScene.hpp; sourceTree = "<group>"; };
 		FEB704E723C1C29B00180E5F /* Floor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Floor.jpg; path = ../Resources/Floor.jpg; sourceTree = "<group>"; };
+		FEF1CA5C23DA873F002DC068 /* BGM.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,6 +281,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FEF1CA5C23DA873F002DC068 /* BGM.mp3 */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				46880B7619C43A67006E1F66 /* CloseNormal.png */,
@@ -432,6 +435,7 @@
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				FEB704E923C1C29B00180E5F /* Floor.jpg in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
+				FEF1CA5D23DA873F002DC068 /* BGM.mp3 in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
