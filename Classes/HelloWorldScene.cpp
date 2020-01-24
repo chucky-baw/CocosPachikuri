@@ -30,19 +30,21 @@
 
 USING_NS_CC;
 
-const float TIME_LIMIT_SECOND = 100;
+const float TIME_LIMIT_SECOND = 10;
 
 
 Scene* HelloWorld::createScene()
 {
     //物理演算があるシーンを生成
     auto scene = Scene::createWithPhysics();
+    auto layer = HelloWorld::create();
+    scene->addChild(layer);
     auto world = scene->getPhysicsWorld();
     world->setGravity(Vec2(0, 0));
     world->setSpeed(1.0f);
     world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-    auto layer = HelloWorld::create();
-    scene->addChild(layer);
+
+    log("created trashcount");
     return scene;
 }
 
@@ -62,6 +64,8 @@ HelloWorld::HelloWorld()
 HelloWorld::~HelloWorld()
 {
     CC_SAFE_RELEASE_NULL(_secondLabel);
+
+    removeAllChildrenWithCleanup(true);
 }
 
 // on "init" you need to initialize your instance
@@ -104,7 +108,6 @@ bool HelloWorld::init()
     roomba->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 25));
     roomba->setScale(0.2, 0.2);
     roomba->setTag(1);
-    this->addChild(roomba, 1);
     
     auto material = PHYSICSBODY_MATERIAL_DEFAULT;
     material.restitution = 0.8f;
@@ -122,9 +125,12 @@ bool HelloWorld::init()
     roombaBody->setCollisionBitmask(3);
     roombaBody->setTag(1);
     //減速させる関数を毎フレーム呼ぶ
-   this->schedule(schedule_selector(HelloWorld::VelUpdate));
+   
     
     roomba->setPhysicsBody(roombaBody);
+    
+    this->addChild(roomba, 1);
+
     
     //猫描画
     auto cat = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/cat.png");
@@ -132,7 +138,6 @@ bool HelloWorld::init()
     cat->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 - 40));
     cat->setScale(0.3, 0.3);
     cat->setTag(3);
-    this->addChild(cat, 1);
     
     Size catSize = Size(cat->getContentSize().width, cat->getContentSize().height);
     
@@ -146,7 +151,8 @@ bool HelloWorld::init()
     catBody->setContactTestBitmask(1);
     catBody->setCollisionBitmask(1);
     cat->setPhysicsBody(catBody);
-    
+    this->addChild(cat, 1);
+
     //壁描画部分
     auto verticalSpriteWall = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/VerticalWall.png");
     auto horizontalSpriteWall = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/HorizontalWall.png");
@@ -204,7 +210,7 @@ bool HelloWorld::init()
     
     this->getEventDispatcher()->addEventListenerWithFixedPriority(catCollisionListener, 11);
     
-    
+    this->schedule(schedule_selector(HelloWorld::VelUpdate));
     
     return true;
 }
@@ -280,6 +286,8 @@ Sprite* HelloWorld::addNewTrash(Node *parent, Vec2 v, bool dynamic, const char *
     material.restitution = 0.0f;
     sprite->setPhysicsBody(PhysicsBody::createCircle(sprite->getContentSize().width / 2, material));
     sprite->getPhysicsBody()->setDynamic(dynamic);
+    
+    sprite->setTag(10);
     sprite->getPhysicsBody()->setCategoryBitmask(3);
     sprite->getPhysicsBody()->setContactTestBitmask(1);
     sprite->getPhysicsBody()->setCollisionBitmask(1);
@@ -340,6 +348,7 @@ bool HelloWorld::catCollision(PhysicsContact& contact)
     {
 
 
+        log("meow");
         //ルンバのスプライトを取得
         auto roombasp = (Sprite*)this->getChildByTag(1);
         //猫のスプライトを取得
@@ -392,10 +401,19 @@ bool HelloWorld::catCollision(PhysicsContact& contact)
         return true;
     }else if((contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1)){//ごみとルンバの衝突
         auto nodeA = contact.getShapeA()->getBody()->getNode();
-        nodeA->removeFromParent();
+        
+            auto action = RemoveSelf::create();
+            nodeA->runAction(action);
+       //nodeA->removeFromParentAndCleanup(true);
+            log("ok");
+        
         trashCount--;
         
-        //log("trashCount = %i", trashCount);
+        tes++;
+        
+        log("trashCount = %i", trashCount);
+        log("tes = %i", tes);
+
         
         if (trashCount == 0)
         {
@@ -404,6 +422,8 @@ bool HelloWorld::catCollision(PhysicsContact& contact)
         //ここをfalseにすることですり抜けを実現
         return false;
     }
+    
+    return true;
     
 }
 
@@ -416,9 +436,10 @@ void HelloWorld::clearMove()
 
 void HelloWorld::gameOverMove()
 {
-    auto scene = GameOverScene::createScene();
+    //trashCount = 0;
     
-    Director::getInstance()->replaceScene(TransitionFade::create(1.5f, scene, Color3B::BLACK));
+    auto scene = GameOverScene::createScene();
+    Director::getInstance()->replaceScene(TransitionFade::create(0.0f, scene, Color3B::BLACK));
     
     return;
 }

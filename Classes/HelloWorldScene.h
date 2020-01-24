@@ -46,6 +46,8 @@ public:
     
     int trashCount = 0;
     
+    int tes = 0;
+    
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     void clearMove();

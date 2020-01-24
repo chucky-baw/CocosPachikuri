@@ -127,7 +127,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto gameOverScene = GameOverScene::createScene();
 
     // run
-    director->runWithScene(gameOverScene);
+    director->runWithScene(TitleScene);
 
     return true;
 }
