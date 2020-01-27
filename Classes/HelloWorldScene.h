@@ -45,6 +45,7 @@ public:
     void VelUpdate(float dt);
     void TimeUpdate(float dt);
 
+    bool collisionFlag = false;
     
     int trashCount = 0;
     

@@ -31,7 +31,7 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
-const float TIME_LIMIT_SECOND = 10;
+const float TIME_LIMIT_SECOND = 25;
 
 
 Scene* HelloWorld::createScene()
@@ -43,7 +43,7 @@ Scene* HelloWorld::createScene()
     auto world = scene->getPhysicsWorld();
     world->setGravity(Vec2(0, 0));
     world->setSpeed(1.0f);
-    world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    //world->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
     log("created trashcount");
     return scene;
@@ -115,7 +115,9 @@ bool HelloWorld::init()
     roomba->setTag(1);
     
     auto material = PHYSICSBODY_MATERIAL_DEFAULT;
-    material.restitution = 0.8f;
+//    material.restitution = 0.8f;
+    material.restitution = 0.0f;
+    material.density = 0.0f;
     material.friction = 0.0f;
     
     
@@ -123,6 +125,8 @@ bool HelloWorld::init()
     //ルンバの物理特性
     auto roombaBody = PhysicsBody::createBox(roombaSize, material);
     roombaBody->setMass(1.0f);
+    roombaBody->setMass(0.0f);
+
     roombaBody->setDynamic(true);
     roombaBody->setRotationEnable(false);
     roombaBody->setCategoryBitmask(1);
@@ -139,6 +143,10 @@ bool HelloWorld::init()
     
     //猫描画
     auto cat = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/cat.png");
+    auto catMaterial = PHYSICSBODY_MATERIAL_DEFAULT;
+    catMaterial.restitution = 0.0f;
+    catMaterial.friction = 1.0f;
+    catMaterial.density = 0.0f;
     cat->setAnchorPoint(Vec2(0.5, 0.5));
     cat->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2 - 40));
     cat->setScale(0.3, 0.3);
@@ -147,8 +155,10 @@ bool HelloWorld::init()
     Size catSize = Size(cat->getContentSize().width, cat->getContentSize().height);
     
     //猫の物理特性
-    auto catBody = PhysicsBody::createCircle(catSize.width / 2);
+    auto catBody = PhysicsBody::createCircle(catSize.width / 2, catMaterial);
     catBody->setMass(1.0f);
+    catBody->setMass(0.0f);
+
     catBody->setDynamic(false);
     catBody->setRotationEnable(false);
     catBody->setTag(4);
@@ -157,6 +167,33 @@ bool HelloWorld::init()
     catBody->setCollisionBitmask(1);
     cat->setPhysicsBody(catBody);
     this->addChild(cat, 1);
+    
+    //2匹目の猫描画
+    auto cat2 = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/cat.png");
+    auto catMaterial2 = PHYSICSBODY_MATERIAL_DEFAULT;
+    catMaterial2.restitution = 0.0f;
+    catMaterial2.friction = 1.0f;
+    catMaterial2.density = 0.0f;
+    cat2->setAnchorPoint(Vec2(0.5, 0.5));
+    cat2->setPosition(Vec2(origin.x + visibleSize.width / 2 - 15, origin.y + visibleSize.height / 2 + 50));
+    cat2->setScale(0.3, 0.3);
+    cat2->setTag(20);
+    
+    Size catSize2 = Size(cat2->getContentSize().width, cat2->getContentSize().height);
+    
+    //猫の物理特性
+    auto catBody2 = PhysicsBody::createCircle(catSize.width / 2, catMaterial2);
+    catBody2->setMass(1.0f);
+    catBody2->setMass(0.0f);
+    
+    catBody2->setDynamic(false);
+    catBody2->setRotationEnable(false);
+    catBody2->setTag(21);
+    catBody2->setCategoryBitmask(2);
+    catBody2->setContactTestBitmask(1);
+    catBody2->setCollisionBitmask(1);
+    cat2->setPhysicsBody(catBody2);
+    this->addChild(cat2, 1);
 
     //壁描画部分
     auto verticalSpriteWall = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/VerticalWall.png");
@@ -248,7 +285,7 @@ void HelloWorld::OnTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event)
 
 void HelloWorld::VelUpdate(float dt)
 {
-    if(_second > 0){
+    if(_second > 0 ){
     Sprite* character = (Sprite*)this->getChildByTag(1);
     auto nowVel = character->getPhysicsBody()->getVelocity();
     float force = 0.92f;
@@ -356,18 +393,37 @@ bool HelloWorld::catCollision(PhysicsContact& contact)
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     
     //　ネコとルンバの衝突
-    if((contact.getShapeA()->getBody()->getTag() == 4 && contact.getShapeB()->getBody()->getTag() == 1))
+    if((contact.getShapeA()->getBody()->getTag() == 4 && contact.getShapeB()->getBody()->getTag() == 1) || (contact.getShapeA()->getBody()->getTag() == 21 && contact.getShapeB()->getBody()->getTag() == 1))
     {
 
+        collisionFlag = true;
+        
+        if(collisionFlag == true){
+            log("cat true");
+        }else{
+            log("cat false");
+        }
 
         log("meow");
         //ルンバのスプライトを取得
         auto roombasp = (Sprite*)this->getChildByTag(1);
         //猫のスプライトを取得
-            auto catsp = (Sprite*)this->getChildByTag(3);
+        Sprite* catsp;
+        if(contact.getShapeA()->getBody()->getTag() == 4){
+            catsp = (Sprite*)this->getChildByTag(3);
+        } else {
+                        catsp = (Sprite*)this->getChildByTag(20);
+        }
         
         roombasp->setVisible(false);
         catsp->setVisible(false);
+        
+        
+        
+        auto phy = (PhysicsBody*)this->getChildByTag(1);
+        //auto nv = phy->getVelocity();
+        phy->setVelocity(Vec2((-0.0f), (-0.0f)));
+        //phy->removeFromWorld();
         
         //ルンバ猫のスプライトを作成
         Sprite* catOnRoomba = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/cat_on_roomba.png");
@@ -384,6 +440,9 @@ bool HelloWorld::catCollision(PhysicsContact& contact)
                                               //ルンバと猫復活
                                               catsp->setVisible(true);
                                               roombasp->setVisible(true);
+                                              
+                                              collisionFlag = false;
+
                                           });
         
         //右に移動
@@ -412,14 +471,18 @@ bool HelloWorld::catCollision(PhysicsContact& contact)
 //        catsp->setVisible(true);
 //        roombasp->setVisible(true);
         
-        
         return true;
-    }else if((contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1)){//ごみとルンバの衝突
+    }else if((contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1 && collisionFlag == false)){//ごみとルンバの衝突
         auto nodeA = contact.getShapeA()->getBody()->getNode();
         
             auto action = RemoveSelf::create();
             nodeA->runAction(action);
-       //nodeA->removeFromParentAndCleanup(true);
+        
+        if(collisionFlag == true){
+            log("trash true");
+        }else{
+            log("trash false");
+        }       //nodeA->removeFromParentAndCleanup(true);
             log("ok");
         
         SimpleAudioEngine::getInstance()->playEffect("pickTrash.mp3");
@@ -438,6 +501,8 @@ bool HelloWorld::catCollision(PhysicsContact& contact)
             clearMove();
         }
         //ここをfalseにすることですり抜けを実現
+        return false;
+    } else if(contact.getShapeA()->getBody()->getTag() == 5 && contact.getShapeB()->getBody()->getTag() == 1 && collisionFlag == true){
         return false;
     }
     
