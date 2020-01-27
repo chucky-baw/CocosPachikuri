@@ -29,7 +29,7 @@ bool TitleScene::init()
     
     //SimpleAudioEngine::getInstance()->preloadBackgroundMusic("BGM.mp3");
     
-    SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(1.0f);
+    SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.3f);
     
     SimpleAudioEngine::getInstance()->playBackgroundMusic("BGM.mp3");
     
@@ -57,6 +57,9 @@ bool TitleScene::init()
     auto listener = EventListenerTouchOneByOne::create();
     listener->onTouchBegan = [this](Touch* touch, Event* event)
     {
+        SimpleAudioEngine::getInstance()->setEffectsVolume(0.5f);
+        SimpleAudioEngine::getInstance()->playEffect("TapButton.mp3");
+        
         //一度押したらアクションを無効化
         this->getEventDispatcher()->removeAllEventListeners();
         //0.5s待機してからcallFuncを呼ぶ

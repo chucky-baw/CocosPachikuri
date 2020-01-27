@@ -26,6 +26,7 @@
 #include "SimpleAudioEngine.h"
 #include "ClearScene.hpp"
 #include "GameOverScene.hpp"
+using namespace CocosDenshion;
 #include <vector>
 
 USING_NS_CC;
@@ -58,13 +59,14 @@ static void problemLoading(const char* filename)
 HelloWorld::HelloWorld()
 :_second(TIME_LIMIT_SECOND)
 , _secondLabel(NULL)
+, trashCount(NULL)
 {
 }
 
 HelloWorld::~HelloWorld()
 {
     CC_SAFE_RELEASE_NULL(_secondLabel);
-
+    log("dest");
     removeAllChildrenWithCleanup(true);
 }
 
@@ -91,6 +93,9 @@ bool HelloWorld::init()
     bg->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     bg->setScale(2.0, 2.0);
     this->addChild(bg, 1);
+    
+    //効果音の音量設定
+    SimpleAudioEngine::getInstance()->setEffectsVolume(0.2f);
     
     
     //残り時間描画
@@ -210,7 +215,8 @@ bool HelloWorld::init()
     
     this->getEventDispatcher()->addEventListenerWithFixedPriority(catCollisionListener, 11);
     
-    this->schedule(schedule_selector(HelloWorld::VelUpdate));
+    
+    //this->schedule(schedule_selector(HelloWorld::VelUpdate));
     
     return true;
 }
@@ -258,7 +264,8 @@ void HelloWorld::VelUpdate(float dt)
         if(this->transitionFade)
         {
             transitionFade = false;
-            gameOverMove();
+            this->gameOverMove();
+            
         }
     }
 }
@@ -337,7 +344,12 @@ Sprite* HelloWorld::addNewTrash(Node *parent, Vec2 v, bool dynamic, const char *
 //    }
 //}
 
-//ねことルンバの衝突
+void HelloWorld::onEnterTransitionDidFinish()
+{
+    this->schedule(schedule_selector(HelloWorld::VelUpdate));
+    
+}
+
 bool HelloWorld::catCollision(PhysicsContact& contact)
 {
     auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -386,6 +398,9 @@ bool HelloWorld::catCollision(PhysicsContact& contact)
         //繰り返しアクションを再生
             auto repeat = Repeat::create(seq, 3);
         
+        //猫と当たった時の効果音
+        SimpleAudioEngine::getInstance()->playEffect("cat1a.mp3");
+        
         auto repeat2 = Sequence::create(repeat, callback, NULL);
 
             catOnRoomba->runAction(repeat2);
@@ -406,6 +421,9 @@ bool HelloWorld::catCollision(PhysicsContact& contact)
             nodeA->runAction(action);
        //nodeA->removeFromParentAndCleanup(true);
             log("ok");
+        
+        SimpleAudioEngine::getInstance()->playEffect("pickTrash.mp3");
+
         
         trashCount--;
         

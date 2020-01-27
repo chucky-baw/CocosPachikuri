@@ -121,10 +121,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = HelloWorld::createScene();
-    auto clearScene = ClearScene::createScene();
+    //auto scene = HelloWorld::createScene();
+    //auto clearScene = ClearScene::createScene();
     auto TitleScene = TitleScene::createScene();
-    auto gameOverScene = GameOverScene::createScene();
+    //auto gameOverScene = GameOverScene::createScene();
 
     // run
     director->runWithScene(TitleScene);

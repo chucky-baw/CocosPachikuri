@@ -8,6 +8,8 @@
 #include "GameOverScene.hpp"
 #include "HelloWorldScene.h"
 #include "TitleScene.hpp"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 USING_NS_CC;
 
 cocos2d::Scene* GameOverScene::createScene()
@@ -47,7 +49,12 @@ bool GameOverScene::init()
     this->addChild(mentenance, 2);
     
     //各ボタンを作成
-    auto againButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", CC_CALLBACK_1(GameOverScene::pushAgain, this));
+//    auto againButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", CC_CALLBACK_1(GameOverScene::pushAgain, this));
+    
+    auto againButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", [](Ref* ref){
+        auto scene = HelloWorld::createScene();
+        Director::getInstance()->replaceScene(scene);
+    });
     
     auto backButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/backButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedBackbutton.png", CC_CALLBACK_1(GameOverScene::pushBack, this));
     
@@ -59,32 +66,32 @@ bool GameOverScene::init()
     
     auto menu = Menu::create(againButton, backButton, NULL);
     menu->setPosition(Point::ZERO);
-    this->addChild(menu, 1);
+    this->addChild(menu);
     
     /////////テスト////////////
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = [this](Touch* touch, Event* event)
-    {
-        //一度押したらアクションを無効化
-        this->getEventDispatcher()->removeAllEventListeners();
-        //0.5s待機してからcallFuncを呼ぶ
-        auto delay = DelayTime::create(0.5);
-
-        auto startGame = CallFunc::create([]{
-            auto scene = HelloWorld::createScene();
-            //シーン移動
-            auto transition = TransitionProgressInOut::create(1.5, scene);
-            Director::getInstance()->replaceScene(transition);
-
-        });
-
-        this->runAction(Sequence::create(delay, startGame, NULL));
-
-
-        return true;
-    };
-
-    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+//    auto listener = EventListenerTouchOneByOne::create();
+//    listener->onTouchBegan = [this](Touch* touch, Event* event)
+//    {
+//        //一度押したらアクションを無効化
+//        this->getEventDispatcher()->removeAllEventListeners();
+//        //0.5s待機してからcallFuncを呼ぶ
+//        auto delay = DelayTime::create(0.5);
+//
+//        auto startGame = CallFunc::create([]{
+//            auto scene = HelloWorld::createScene();
+//            //シーン移動
+//            auto transition = TransitionProgressInOut::create(1.5, scene);
+//            Director::getInstance()->replaceScene(transition);
+//
+//        });
+//
+//        this->runAction(Sequence::create(delay, startGame, NULL));
+//
+//
+//        return true;
+//    };
+//
+//    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
     return true;
 }
@@ -103,7 +110,7 @@ void GameOverScene::pushAgain(Ref *pSender)
 //
 //        Director::getInstance()->replaceScene(transition);
 //    });
-    //Scene *scene = HelloWorld::createScene();
+    Scene *scene = HelloWorld::createScene();
     //Director::getInstance()->replaceScene(scene);
     //this->runAction(Sequence::create(delay, startGame, NULL));
     
@@ -114,5 +121,7 @@ void GameOverScene::pushAgain(Ref *pSender)
 void GameOverScene::pushBack(Ref *pSender)
 {
     CCLOG("push back button");
+    SimpleAudioEngine::getInstance()->setEffectsVolume(0.5f);
+    SimpleAudioEngine::getInstance()->playEffect("TapButton.mp3");
     Director::getInstance()->replaceScene( TitleScene::createScene());
 }
