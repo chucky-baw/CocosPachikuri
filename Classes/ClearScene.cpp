@@ -8,6 +8,8 @@
 
 #include "ClearScene.hpp"
 #include "TitleScene.hpp"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 USING_NS_CC;
 
@@ -25,6 +27,10 @@ bool ClearScene::init()
     {
         return false;
     }
+    
+    //BGMストップ
+    SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+    SimpleAudioEngine::getInstance()->playEffect("Clear.mp3");
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -65,6 +71,7 @@ bool ClearScene::init()
             Director::getInstance()->replaceScene(transition);
         });
         
+        SimpleAudioEngine::getInstance()->playEffect("TapButton.mp3");
         this->runAction(Sequence::create(delay, backToTitle, NULL));
         
         return true;

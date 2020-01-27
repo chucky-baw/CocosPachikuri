@@ -62,6 +62,8 @@
 		FEF1CA6123DE6846002DC068 /* cat1a.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA5F23DE6846002DC068 /* cat1a.mp3 */; };
 		FEF1CA6323DE6907002DC068 /* pickTrash.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA6223DE6907002DC068 /* pickTrash.mp3 */; };
 		FEF1CA6523DE6962002DC068 /* TapButton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA6423DE6962002DC068 /* TapButton.mp3 */; };
+		FEF1CA6823DE6BAF002DC068 /* Clear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA6623DE6BAF002DC068 /* Clear.mp3 */; };
+		FEF1CA6923DE6BAF002DC068 /* Over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA6723DE6BAF002DC068 /* Over.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +162,8 @@
 		FEF1CA5F23DE6846002DC068 /* cat1a.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cat1a.mp3; sourceTree = "<group>"; };
 		FEF1CA6223DE6907002DC068 /* pickTrash.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pickTrash.mp3; sourceTree = "<group>"; };
 		FEF1CA6423DE6962002DC068 /* TapButton.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TapButton.mp3; sourceTree = "<group>"; };
+		FEF1CA6623DE6BAF002DC068 /* Clear.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Clear.mp3; sourceTree = "<group>"; };
+		FEF1CA6723DE6BAF002DC068 /* Over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Over.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +291,8 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FEF1CA6623DE6BAF002DC068 /* Clear.mp3 */,
+				FEF1CA6723DE6BAF002DC068 /* Over.mp3 */,
 				FEF1CA6423DE6962002DC068 /* TapButton.mp3 */,
 				FEF1CA6223DE6907002DC068 /* pickTrash.mp3 */,
 				FEF1CA5F23DE6846002DC068 /* cat1a.mp3 */,
@@ -443,6 +449,7 @@
 			files = (
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				FEF1CA6523DE6962002DC068 /* TapButton.mp3 in Resources */,
+				FEF1CA6823DE6BAF002DC068 /* Clear.mp3 in Resources */,
 				FEB704E923C1C29B00180E5F /* Floor.jpg in Resources */,
 				1A88B2641FC3D9C9005C14AE /* Images.xcassets in Resources */,
 				FEF1CA5D23DA873F002DC068 /* BGM.mp3 in Resources */,
@@ -452,6 +459,7 @@
 				1AF87B891F6F781D007BE51C /* LaunchScreenBackground.png in Resources */,
 				FEF1CA6323DE6907002DC068 /* pickTrash.mp3 in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
+				FEF1CA6923DE6BAF002DC068 /* Over.mp3 in Resources */,
 				FEF1CA6123DE6846002DC068 /* cat1a.mp3 in Resources */,
 				1AF87B881F6F781D007BE51C /* LaunchScreen.storyboard in Resources */,
 			);

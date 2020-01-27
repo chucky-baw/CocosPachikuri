@@ -32,6 +32,13 @@ bool GameOverScene::init()
         return false;
     }
     
+    //BGMストップ
+    SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+    
+    //SE再生
+    SimpleAudioEngine::getInstance()->setEffectsVolume(0.3f);
+    SimpleAudioEngine::getInstance()->playEffect("Over.mp3");
+    
     
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -51,10 +58,7 @@ bool GameOverScene::init()
     //各ボタンを作成
 //    auto againButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", CC_CALLBACK_1(GameOverScene::pushAgain, this));
     
-    auto againButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", [](Ref* ref){
-        auto scene = HelloWorld::createScene();
-        Director::getInstance()->replaceScene(scene);
-    });
+    auto againButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedAgainButton.png", CC_CALLBACK_1(GameOverScene::pushAgain, this));
     
     auto backButton = MenuItemImage::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/backButton.png", "/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/pushedBackbutton.png", CC_CALLBACK_1(GameOverScene::pushBack, this));
     
