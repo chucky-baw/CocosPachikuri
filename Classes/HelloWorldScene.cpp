@@ -96,7 +96,7 @@ bool HelloWorld::init()
     
     //効果音の音量設定
     SimpleAudioEngine::getInstance()->setEffectsVolume(0.2f);
-    
+
     
     //残り時間描画
     
@@ -106,7 +106,21 @@ bool HelloWorld::init()
     secondLabel->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 300));
     this->addChild(secondLabel, 5);
     
+    //残り時間のバー描画
+    auto HPBar = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/HP.png");
+    ProgressTimer* Timer = ProgressTimer::create(HPBar);
+    Timer->setAnchorPoint(Vec2(0.5, 0.5));
+    Timer->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 275));
+    Timer->setScale(0.3f, 0.3f);
+    Timer->setType(ProgressTimer::Type::BAR);
+    Timer->setPercentage(100);
+    Timer->setTag(2);
+    //伸び始め
+    Timer->setMidpoint(Vec2(0, 0.5));
+    //のびる方向
+    Timer->setBarChangeRate(Vec2(1, 0));
     
+    this->addChild(Timer, 5);
     //ルンバ描画
     auto roomba = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/Roomba.png");
     roomba->setAnchorPoint(Vec2(0.5, 0.5));
@@ -296,7 +310,14 @@ void HelloWorld::VelUpdate(float dt)
     _second -= dt;
     int second = static_cast<int>(_second);
  _secondLabel->setString(StringUtils::toString(second));
-    if(second == 0 && this->transitionFade == true)
+    
+    //プログレスバーの処理
+    ProgressTimer* timer = (ProgressTimer*)this->getChildByTag(2);
+    //float percentage = timer->getPercentage();
+    float percentage = _second / 25 * 100;
+    timer->setPercentage(percentage);
+    
+    if(percentage < 0 && this->transitionFade == true)
     {
         if(this->transitionFade)
         {

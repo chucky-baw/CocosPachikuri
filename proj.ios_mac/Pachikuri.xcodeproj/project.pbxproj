@@ -64,6 +64,8 @@
 		FEF1CA6523DE6962002DC068 /* TapButton.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA6423DE6962002DC068 /* TapButton.mp3 */; };
 		FEF1CA6823DE6BAF002DC068 /* Clear.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA6623DE6BAF002DC068 /* Clear.mp3 */; };
 		FEF1CA6923DE6BAF002DC068 /* Over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA6723DE6BAF002DC068 /* Over.mp3 */; };
+		FEF1CA6C23DEFCA0002DC068 /* HP.png in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA6A23DEFCA0002DC068 /* HP.png */; };
+		FEF1CA6D23DEFCA0002DC068 /* gaugeFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = FEF1CA6B23DEFCA0002DC068 /* gaugeFrame.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,6 +166,8 @@
 		FEF1CA6423DE6962002DC068 /* TapButton.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = TapButton.mp3; sourceTree = "<group>"; };
 		FEF1CA6623DE6BAF002DC068 /* Clear.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Clear.mp3; sourceTree = "<group>"; };
 		FEF1CA6723DE6BAF002DC068 /* Over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Over.mp3; sourceTree = "<group>"; };
+		FEF1CA6A23DEFCA0002DC068 /* HP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HP.png; sourceTree = "<group>"; };
+		FEF1CA6B23DEFCA0002DC068 /* gaugeFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gaugeFrame.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,6 +295,8 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FEF1CA6B23DEFCA0002DC068 /* gaugeFrame.png */,
+				FEF1CA6A23DEFCA0002DC068 /* HP.png */,
 				FEF1CA6623DE6BAF002DC068 /* Clear.mp3 */,
 				FEF1CA6723DE6BAF002DC068 /* Over.mp3 */,
 				FEF1CA6423DE6962002DC068 /* TapButton.mp3 */,
@@ -448,6 +454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
+				FEF1CA6C23DEFCA0002DC068 /* HP.png in Resources */,
 				FEF1CA6523DE6962002DC068 /* TapButton.mp3 in Resources */,
 				FEF1CA6823DE6BAF002DC068 /* Clear.mp3 in Resources */,
 				FEB704E923C1C29B00180E5F /* Floor.jpg in Resources */,
@@ -460,6 +467,7 @@
 				FEF1CA6323DE6907002DC068 /* pickTrash.mp3 in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				FEF1CA6923DE6BAF002DC068 /* Over.mp3 in Resources */,
+				FEF1CA6D23DEFCA0002DC068 /* gaugeFrame.png in Resources */,
 				FEF1CA6123DE6846002DC068 /* cat1a.mp3 in Resources */,
 				1AF87B881F6F781D007BE51C /* LaunchScreen.storyboard in Resources */,
 			);
