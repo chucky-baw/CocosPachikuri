@@ -100,17 +100,23 @@ bool HelloWorld::init()
     
     //残り時間描画
     
-    int second = static_cast<int>(_second);
-    auto secondLabel = Label::createWithSystemFont(StringUtils::toString(second), "MarkerFelt", 16);
-    this->setSecondLabel(secondLabel);
-    secondLabel->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 300));
-    this->addChild(secondLabel, 5);
+//    int second = static_cast<int>(_second);
+//    auto secondLabel = Label::createWithSystemFont(StringUtils::toString(second), "MarkerFelt", 16);
+//    this->setSecondLabel(secondLabel);
+//    secondLabel->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 300));
+//    this->addChild(secondLabel, 5);
     
+    //バーのフレーム部分
+    auto frame = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/gaugeFrame.png");
+    frame->setAnchorPoint(Vec2(0.5, 0.5));
+    frame->setPosition(Vec2(origin.x + visibleSize.width / 2 + 8, origin.y + 300));
+    frame->setScale(0.3f, 0.3f);
+    this->addChild(frame, 4);
     //残り時間のバー描画
     auto HPBar = Sprite::create("/Users/sasakiyusei/Documents/cocos/CocosPachikuri/Resources/HP.png");
     ProgressTimer* Timer = ProgressTimer::create(HPBar);
     Timer->setAnchorPoint(Vec2(0.5, 0.5));
-    Timer->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 275));
+    Timer->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + 300));
     Timer->setScale(0.3f, 0.3f);
     Timer->setType(ProgressTimer::Type::BAR);
     Timer->setPercentage(100);
@@ -309,7 +315,7 @@ void HelloWorld::VelUpdate(float dt)
     //制限時間減らしていく
     _second -= dt;
     int second = static_cast<int>(_second);
- _secondLabel->setString(StringUtils::toString(second));
+// _secondLabel->setString(StringUtils::toString(second));
     
     //プログレスバーの処理
     ProgressTimer* timer = (ProgressTimer*)this->getChildByTag(2);
